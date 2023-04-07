@@ -1,0 +1,10 @@
+torchenv/
+evaluation/
+evaluation2/
+__pycache__/
+papers/
+Pix2Pix_Satellite_to_Map/
+test_sample_generated/
+Trained_weights_customsketch/
+*.tar 
+*.zip 
