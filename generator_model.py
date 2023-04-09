@@ -1,7 +1,8 @@
 import torch
 import torch
 import torch.nn as nn
-
+import config
+from torchsummary import summary
 class Block(nn.Module):
     def __init__(self, in_channels, out_channels, down=True, act="relu", use_dropout=False):
         super(Block, self).__init__()
@@ -82,8 +83,15 @@ class Generator(nn.Module):
 
 
 def test():
-    x = torch.randn((1, 3, 512, 512))
-    model = Generator(in_channels=3, features=64)
+    x = torch.randn((1, 3, 512, 512)).to(config.DEVICE)
+    # x = x.to(config.DEVICE)
+    model = Generator(in_channels=3, features=64).to(config.DEVICE)
+    # Load the pre-trained weights
+    checkpoint = torch.load(config.CHECKPOINT_GEN, map_location=config.DEVICE)
+    model.load_state_dict(checkpoint['state_dict'],strict=False)
+
+    # Print the model summary
+    summary(model, input_size=(3, 512, 512))
     preds = model(x)
     print(preds.shape)
 

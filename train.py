@@ -56,7 +56,6 @@ def train_fn(
                 EPOCH = idx,
                 D_real=torch.sigmoid(D_real).mean().item(),
                 D_fake=torch.sigmoid(D_fake).mean().item(),
-                PSNR=psnr,
                 MSE = mse
                 # SSIM=ssim,
             )
@@ -85,6 +84,8 @@ def main():
         shuffle=True,
         num_workers=config.NUM_WORKERS,
     )
+    
+    
     g_scaler = torch.cuda.amp.GradScaler()
     d_scaler = torch.cuda.amp.GradScaler()
     val_dataset = MapDataset(root_dir=config.VAL_DIR)
